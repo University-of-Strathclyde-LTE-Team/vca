@@ -6,9 +6,10 @@ RUN apt install cron -y
 RUN apt install nano -y
 
 # Copy PHP ini default configuration.
-COPY /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
+#COPY /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
+COPY ./moodle.ini /usr/local/etc/php/conf.d/10-docker-php-moodle.ini
 # Send Docker environment variables to etc so they're available for things like cron.
-RUN evn >> /etc/environment
+RUN env >> /etc/environment
 
 RUN git clone -b MOODLE_405_STABLE git://git.moodle.org/moodle.git /var/www/html/
 COPY config.php /var/www/html/config.php
