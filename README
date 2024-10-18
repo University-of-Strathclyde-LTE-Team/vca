@@ -47,7 +47,7 @@ If you do not select anything this provider instance will be accessible througho
 ### Global Search Configuration
 Once basic Moodle is installed, you need to configure the Global Search.
 
-1. Access the global search configuration page `http://localhost:8080/admin/settings.php?section=manageglobalsearch`
+1. Access the global search configuration page [http://localhost:8080/admin/settings.php?section=manageglobalsearch](http://localhost:8080/admin/settings.php?section=manageglobalsearch)
 2. Select the `Solr for Rag` search engine. This should have been pulled from [https://github.com/mhughes2k/moodle-search_solrrag](https://github.com/mhughes2k/moodle-search_solrrag) as part of the docker build of the moodle image.
 3. Click on the `3. Setup search engine` option.
 4. Under `AI Settings`, set the `Choose Provider` option to an AI Provider that has been defined. A global provider is probably best.
