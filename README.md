@@ -14,6 +14,7 @@ This docker-compose repository should set up a collection of working Moodle and 
     This will add in the configuration setings for the DenseVectorField types and the configuration for the Tika extraction library.
 
     `cp -r /var/solr/orig/ /var/solr/data/moodle/conf/`
+4. Restart solr. This is easiest done by doing a `docker-compose down` and `docker-compose up`.
 
 
 ## Moodle Installation
@@ -50,6 +51,8 @@ Once basic Moodle is installed, you need to configure the Global Search.
 
 1. Access the global search configuration page [http://localhost:8080/admin/settings.php?section=manageglobalsearch](http://localhost:8080/admin/settings.php?section=manageglobalsearch)
 2. Select the `Solr for Rag` search engine. This should have been pulled from [https://github.com/mhughes2k/moodle-search_solrrag](https://github.com/mhughes2k/moodle-search_solrrag) as part of the docker build of the moodle image.
+3. Click on the `Save Changes` button.
+4. The `3. Set up Search engine` option should display "no solr configuration found".
 3. Click on the `3. Setup search engine` option.
 4. Under `AI Settings`, set the `Choose Provider` option to an AI Provider that has been defined. A global provider is probably best.
 5. For `Choose File Content extractor` choose `Solr with internal tika`. 
@@ -59,11 +62,18 @@ Once basic Moodle is installed, you need to configure the Global Search.
 7. Set the `Index name` to `moodle`. Unless you changed this in Step 2 of the solr configuration.
 8. Click `Save changes`.
 9. Return to the `Manage global search` configuration page.
-10. You should have all "green" statuses for Steps 1 - 4.
+10. You should have all "green" statuses for Steps 1 - 3.
 11. Access Step 5 `Enable global search`.
 12. Set `Enable global search` to "Yes".
 13. If your cron is running on a regular basis (as it should), the global search indexer should now start indexing content in moodle sites.
     
     You can run `php search/cli/indexer.php` within the moodle container to trigger the indexing process as well.
 
+## Next Steps
+1. Restore or create a course
+2. Create an instance of the "AI Chat (Reference)" activity.
+3. Give it a name.
+4. In `AI Provider` select an AI provider. 
+    This doesn't have to be the same AI Provider that the search uses. This provider is used to synthesise the response to the user.
 
+5. You should get a prompt and be able to interrogate your course.
