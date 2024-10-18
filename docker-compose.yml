@@ -1,0 +1,54 @@
+services:
+  moodle:
+    build:
+      context: moodle
+    depends_on:
+      - mysql
+      - solr
+    ports:
+    - "8080:80"
+    environment:
+      MOODLE_DOCKER_DBTYPE: mysqli
+      MOODLE_DOCKER_DBHOST: mysql
+      MOODLE_DOCKER_DBNAME: moodle
+      MOODLE_DOCKER_DBUSER: moodle
+      MOODLE_DOCKER_DBPASS: moodle
+      MOODLE_DOCKER_DBCOLLATION: utf8mb4_unicode_ci
+      MOODLE_DOCKER_WEB_HOST: localhost
+      MOODLE_DOCKER_WEB_PORT: 8080
+      MOODLE_ADMIN: admin
+      MOODLE_ADMIN_PASSWORD: admin
+      MOODLE_ADMIN_EMAIL: admin@localhost.localdomain
+    volumes:
+      # - "./volumes/moodle/data:/var/www/moodledata"
+      - "moodledata:/var/www/moodledata"
+  solr:
+    build:
+      context: solr
+    # ports:  # This is just so we can see solr from outside.
+    # - "8983:8983"
+    volumes:
+    #  - "./volumes/solrconfig:/var/solr"
+      - "solrdata:/var/solr"
+    entrypoint:
+      - docker-entrypoint.sh
+      - solr
+      - start
+      - -f
+      - -Dsolr.modules=extraction
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: moodle
+      MYSQL_USER: moodle
+      MYSQL_PASSWORD: moodle
+      MYSQL_DATABASE: moodle
+    volumes:
+      - "mysqldata:/var/lib/mysql"
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+  redis:
+    image: redis:4.0.11-alpine
+volumes:
+  moodledata:
+  solrdata:
+  mysqldata: 
