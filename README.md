@@ -39,6 +39,7 @@ An AI Provider will need to be configured.
 10. Set the `Completion Model` to an appropriate value for the model you wish to use. `gpt-4o` is the current latest Open AI model.
 11. Enable the `Allow Embeddings`
 12. Set the `Embeddings path` option. This is the *relative* URL to the Base URL to generate an embedding from text. For OpenAI this is `/v1/embeddings`.
+13. Set the `Embedding model` to appropriate text embedding model. For OpenAI this is `text-embedding-3-large` or `text-embedding-3-small`
 
 The `Content Constraints` section allows you to select a Moodle Category or Course that this provider will be available in.
 
